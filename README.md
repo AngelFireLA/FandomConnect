@@ -19,7 +19,8 @@ Restart/reload your server and enjoy !
 ## Configuration
 First, input your fandom link :
 ```links:
-    fandom: "https://**yourfandom**.fandom.com"```
+    fandom: "https://**yourfandom**.fandom.com"
+    ```
 
 Now to the login phase, to create pages on the fandom, you will need a fandom bot account
 How to get a bot password you may ask, go check on this page : https://community.fandom.com/wiki/Help:Bots at the Using Special:BotPasswords section
@@ -29,7 +30,8 @@ using the RoleplayCard integration :
 ```    rpcard:
         integration_enabled: true
         create_page_to_list_players: true
-        create_infobox_for_players: true```
+        create_infobox_for_players: true
+        ```
 You can select if you want it enabled, if you want to create a page that will list every player page crated
 And if you want the plugin to create a default infobox template to support your player information (only disabled if you want to use your own one)
 
@@ -41,7 +43,8 @@ Now the Towny Integration :
         
         nations: true
         create_page_to_list_nations: true
-        create_infobox_for_nations: false```
+        create_infobox_for_nations: false
+        ```
 You can choose if you want only towns or only nations to have their data sent.
 Like the RoleplayCard integration, you have the option to create a page that will list all towns/nations pages. You can also choose if you want to use the default infobox or your own custom one.
 
@@ -51,7 +54,8 @@ RoleplayCard supports 2 language : French and English, so there is 2 language fi
 ## Infoboxes (work in progress)
 Data from your players/towns/nations must be sent into infoboxes, otherwise it would be just a bunch of unordered wikicode (fandom's language), so I will teach you how to use your own infobox :
 ```infoboxes:
-    players: "default-players.txt"```
+    players: "default-players.txt"
+    ```
 A "infoboxes" folder will be created where you will need to put all(I mean really ALL) the wikicode of your infobox in a text file, this is where you put the name of your textfile (or you can edit the default one).
 Your infobox code will need to have some changes :
 you will have to edit the, data source | params | exemple usage, (they are the same things), of your infobox to include several words :
