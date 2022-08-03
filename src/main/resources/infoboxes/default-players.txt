@@ -1,0 +1,68 @@
+<infobox>
+  <title source="title1">
+    <default>{{PAGENAME}}</default>
+  </title>
+  <data source="rp_name">
+    <label>RP Name</label>
+  </data>
+  <data source="age">
+    <label>Age</label>
+  </data>
+  <data source="dead_or_alive">
+    <label>Is Dead or Alive ?</label>
+  </data>
+  <data source="titles">
+    <label>Titles</label>
+  </data>
+  <data source="religion">
+    <label>Religion</label>
+  </data>
+  <data source="jobs">
+    <label>Jobs</label>
+  </data>
+  <data source="race">
+    <label>Race</label>
+  </data>
+  <data source="money">
+    <label>Money</label>
+  </data>
+  <data source="town">
+    <label>Town</label>
+  </data>
+  <data source="nation">
+    <label>Nation</label>
+  </data>
+</infobox>
+<noinclude>
+Exemple usage:
+<pre>
+{{Weshalors
+
+  | title1=Exemple1
+
+  | rp_name=Exemple2
+
+  | age=Exemple3
+
+  | dead_or_alive=Exemple4
+
+  | titles=Exemple5
+
+  | religion=Exemple6
+
+  | jobs=Exemple7
+
+  | race=Exemple8
+  
+  | money=Exemple9
+
+  | town=Exemple10
+
+  | nation=Exemple11
+
+}}
+</pre>
+<templatedata>
+{"params":{"title1":{"suggested":true},"rp_name":{"suggested":true},"age":{"suggested":true},"dead_or_alive":{"suggested":true},"titles":{"suggested":true},"religion":{"suggested":true},"jobs":{"suggested":true},"race":{"suggested":true},"money":{"suggested":true},"town":{"suggested":true},"nation":{"suggested":true}},"sets":[],"maps":{}}
+</templatedata>
+</noinclude>

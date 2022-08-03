@@ -1,0 +1,55 @@
+rpcard:
+    integration:
+        enabled: "§a[FandomConnect] RoleplayCard integration was enabled !"
+        disabled: "§a[FandomConnect] RoleplayCard integration was disabled !"
+    
+    create_page_to_list_players:
+        enabled: "§a[FandomConnect] Creating a page to list players was enabled !"
+        disabled: "§a[FandomConnect] Creating a page to list players was disabled !"
+
+towny:
+    integration:
+        enabled: "§a[FandomConnect] Towny integration was enabled !"
+        disabled: "§a[FandomConnect] Towny integration was disabled !"
+    
+    town_data_sending:
+        enabled: "§a[FandomConnect] Sending data of towns was enabled !"
+        disabled: "§a[FandomConnect] Sending data of towns was disabled !"
+    
+    create_page_to_list_towns:
+        enabled: "§a[FandomConnect] Creating a page to list towns was enabled !"
+        disabled: "§a[FandomConnect] Creating a page to list towns was disabled !"
+    
+    nation_data_sending:
+        enabled: "§a[FandomConnect] Sending data of nations was enabled !"
+        disabled: "§a[FandomConnect] Sending data of towns was disabled !"
+    
+    create_page_to_list_nations:
+        enabled: "§a[FandomConnect] Creating a page to list nations was enabled !"
+        disabled: "§a[FandomConnect] Creating a page to list nations was disabled !"
+        
+list_management:
+    title:
+        nations: "List of Nations"
+        towns: "List of Towns"
+        players: "List of Players"
+        infobox_players: "Template:Player Infos"
+        infobox_towns: "Template:Town Infos"
+        infobox_nations: "Template:Nation Infos"
+    reason:
+        creation: "Creation of the page."
+        added_something:
+            nations: "Added Nation(s) to the list."
+            towns: "Added Town(s) to the list."
+            players: "Added Player(s) to the list."
+        
+errors:
+    option_disabled: "§c[FandomConnect] Error, option is disabled in config !"
+    neither_true_or_false: "§c[FandomConnect] Error in the config, neither true or false is specified !"
+    
+#The number next to Exemple, is the plugin's way to recognize what value to put here, so for example, it will always replace Exemple6 by religion, you can remove some parts, but you musn't rename the name associated with the exemple (like religion, race). If you want it to appear differently, changed the template wikicode directly :
+#Exemple1 = Player Name | Exemple2 = RP Name | Exemmple3 = age | Exemple4 = dead_or_alive | Exemple5 = titles | Exemple6 = religion | Exemple7 = jobs | Exemple8 = race | (towny : Exemple9 = money | Exemple10 = town| Exemple11 =nation)
+#Also, you musn't put space before or after |
+
+infobox:
+    players: "|title1=Exemple1|rp_name=Exemple2|age=Exemple3|dead_or_alive=Exemple4|titles=Exemple5|religion=Exemple6|jobs=Exemple7|race=Exemple8|money=Exemple9|town=Exemple01|nation=Exemple02}}"        

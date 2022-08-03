@@ -1,0 +1,10 @@
+name: FandomConnect
+version: 1.0
+main: me.angelfire.fandomconnect.FandomConnect
+api-version: 1.19
+prefix: Plugin Started
+authors: [ AngelFire ]
+softdepend: [Towny, RoleplayCard]
+description: Send info from your server to your fandom
+commands:
+ fandom:

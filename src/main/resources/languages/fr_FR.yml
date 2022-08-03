@@ -1,0 +1,55 @@
+rpcard:
+    integration:
+        enabled: "§a[FandomConnect] L'intégration du plugin RoleplayCard a été activée !"
+        disabled: "§a[FandomConnect] L'intégration du plugin RoleplayCard a été desactivée !"
+    
+    create_page_to_list_players:
+        enabled: "§a[FandomConnect] La création d'une page pour lister les joueurs a été activée !"
+        disabled: "§a[FandomConnect] La création d'une page pour lister les joueurs a été desactivée !"
+
+towny:
+    integration:
+        enabled: "§a[FandomConnect] L'intégration du plugin Towny a été activée !"
+        disabled: "§a[FandomConnect] L'intégration du plugin Towny a été desactivée !"
+    
+    town_data_sending:
+        enabled: "§a[FandomConnect] L'envoi des information des villes a été activé."
+        disabled: "§a[FandomConnect] L'envoi des information des villes a été desactivé."
+    
+    create_page_to_list_towns:
+        enabled: "§a[FandomConnect] La création d'une page pour lister les villes a été activée !"
+        disabled: "§a[FandomConnect] La création d'une page pour lister les villes a été desactivée !"
+    
+    nation_data_sending:
+        enabled: "§a[FandomConnect] L'envoi des information des nations a été activé."
+        disabled: "§a[FandomConnect] L'envoi des information des nations a été desactivé."
+    
+    create_page_to_list_nations:
+        enabled: "§a[FandomConnect] La création d'une page pour lister les nations a été activée !"
+        disabled: "§a[FandomConnect] La création d'une page pour lister les nations a été desactivée !"
+        
+list_management:
+    title:
+        nations: "Liste des Nations"
+        towns: "Liste des Villes"
+        players: "Liste des Joueurs"
+        infobox_players: "Modèle:Infos du Joueur"
+        infobox_towns: "Modèle:Infos de la Ville"
+        infobox_nations: "Modèle:Infos de la Nation"
+    reason:
+        creation: "Création de la page."
+        added_something:
+            nations: "Nation(s) ajoutée(s) à la liste."
+            towns: "Villes(s) ajoutée(s) à la liste."
+            players: "Joueurs(s) ajouté(s) à la liste."
+        
+errors:
+    option_disabled: "§c[FandomConnect] Erreur, cette option est desactivée dans la config !"
+    neither_true_or_false: "§c[FandomConnect] Erreur dans la config, n'y true ni false n'y est spécifié !"
+    
+infobox:
+#Le numéro de l'exmple défini la valeur que le plugin va donner, par exemple, ou que vous mettiez le Exemple 5, ça remplacera toujours par la liste des titres (t si vous ne mettez pas ce numéro la, il n'y aura pas l'information dans votre infobox bien sûr), voici a quoi les numéros correspondent :
+#Exemple1 = Nom du Joueur | Exemple2 = Nom RP | Exemmple3 = Âge | Exemple4 = vivant ou mort | Exemple5 = Titres | Exemple6 = Religion | Exemple7 = Professions | Exemple8 = Race | (towny : Exemple9 = argent | Exemple10 = ville| Exemple11 = nation)
+#Aussi, ne surtout pas mettre d'espace avant ou après les |
+
+    players: "|title1=Exemple1|rp_name=Exemple2|age=Exemple3|dead_or_alive=Exemple4|title=Exemple5|religion=Exemple6|jobs=Exemple7|race=Exemple8|money=Exemple9|town=Exemple01|nation=Exemple02}}"   

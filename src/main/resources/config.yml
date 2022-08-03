@@ -1,0 +1,37 @@
+links:
+    fandom: "https://yourfandom.fandom.com"
+
+login:
+#These are not fandom account login, these are fandom BOTS login,  for more info, go to https://community.fandom.com/wiki/Help:Bots at the "Using Special:BotPasswords" section
+    username: "username"
+    password: "password"
+    
+data_to_send:
+    rpcard:
+        integration_enabled: true
+        create_page_to_list_players: false
+        create_infobox_for_players: false
+        sync_at_restart: false
+        
+    towny:
+        integration_enabled: false
+        towns: true
+        create_page_to_list_towns: false
+        create_infobox_for_towns: false
+        sync_at_restart: false
+        
+        nations: true
+        create_page_to_list_nations: false
+        create_infobox_for_nations: false
+        sync_at_restart: false
+        
+language: en_US
+
+#EN To create your own infobox, create a text file in the infobox folder, then copy and paste the whole wiki code of your infobox, then go to your language file to do the last steps.
+#FR Pour mettre votre propre infobox, créer un fichier text dans le dossier infoboxes, et y mettre tout le wiki code de la page de votre infobox, ensuite aller dans votre fichier langue et faites les dernières modifs nécessaires.
+
+
+infoboxes:
+    players: "default-players.txt"
+    towns: "default-towns.txt"
+    nations: "default-nations.txt"
