@@ -6,6 +6,10 @@ rpcard:
     create_page_to_list_players:
         enabled: "§a[FandomConnect] La création d'une page pour lister les joueurs a été activée !"
         disabled: "§a[FandomConnect] La création d'une page pour lister les joueurs a été desactivée !"
+    
+    create_page_infobox_for_players:
+        enabled: "§a[FandomConnect] La création d'une infobox pour les joueurs a été activée !"
+        disabled: "§a[FandomConnect] La création d'une infobox pour les joueurs a été desactivée !"
 
 towny:
     integration:
@@ -27,6 +31,15 @@ towny:
     create_page_to_list_nations:
         enabled: "§a[FandomConnect] La création d'une page pour lister les nations a été activée !"
         disabled: "§a[FandomConnect] La création d'une page pour lister les nations a été desactivée !"
+        
+    create_infobox_for_towns:
+        enabled: "§a[FandomConnect] La création d'une infobox pour les villes a été activée !"
+        disabled: "§a[FandomConnect] La création d'une infobox pour les nations a été desactivée !"
+
+    create_infobox_for_nations:
+        enabled: "§a[FandomConnect] Creating an infobox for nations was enabled !"
+        disabled: "§a[FandomConnect] Creating an infobox for nations was disabled !"
+        
         
 list_management:
     title:
@@ -51,5 +64,8 @@ infobox:
 #Le numéro de l'exmple défini la valeur que le plugin va donner, par exemple, ou que vous mettiez le Exemple 5, ça remplacera toujours par la liste des titres (t si vous ne mettez pas ce numéro la, il n'y aura pas l'information dans votre infobox bien sûr), voici a quoi les numéros correspondent :
 #Exemple1 = Nom du Joueur | Exemple2 = Nom RP | Exemmple3 = Âge | Exemple4 = vivant ou mort | Exemple5 = Titres | Exemple6 = Religion | Exemple7 = Professions | Exemple8 = Race | (towny : Exemple9 = argent | Exemple10 = ville| Exemple11 = nation)
 #Aussi, ne surtout pas mettre d'espace avant ou après les |
-
-    players: "|title1=Exemple1|rp_name=Exemple2|age=Exemple3|dead_or_alive=Exemple4|title=Exemple5|religion=Exemple6|jobs=Exemple7|race=Exemple8|money=Exemple9|town=Exemple01|nation=Exemple02}}"   
+    players: "|title1=Exemple1|rp_name=Exemple2|age=Exemple3|dead_or_alive=Exemple4|title=Exemple5|religion=Exemple6|jobs=Exemple7|race=Exemple8|money=Exemple9|town=Exemple01|nation=Exemple02}}"
+    empty_value: "???"
+    
+reload:
+    config: "§a[FandomConnect] La config a été rechargée ! !"

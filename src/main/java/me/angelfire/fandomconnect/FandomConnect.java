@@ -46,7 +46,8 @@ public final class FandomConnect extends JavaPlugin {
         FandomConnect.createInfoboxes(INSTANCE.getWiki(), INSTANCE.getConfig());
         getCommand("fandom").setExecutor(new Fandom());
         if(this.getConfig().getString("data_to_send.rpcard.sync_at_restart").equals("true") && this.getConfig().getString("data_to_send.rpcard.integration_enabled").equals("true")) {
-        	Fandom.syncPlayers();
+            FileConfiguration config = YamlConfiguration.loadConfiguration(new File(FandomConnect.INSTANCE.getDataFolder(), "config.yml"));
+        	Fandom.syncPlayers(config);
         }
     }
 

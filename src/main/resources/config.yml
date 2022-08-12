@@ -27,11 +27,28 @@ data_to_send:
         
 language: en_US
 
-#EN To create your own infobox, create a text file in the infobox folder, then copy and paste the whole wiki code of your infobox, then go to your language file to do the last steps.
-#FR Pour mettre votre propre infobox, créer un fichier text dans le dossier infoboxes, et y mettre tout le wiki code de la page de votre infobox, ensuite aller dans votre fichier langue et faites les dernières modifs nécessaires.
+#EN To create your own infobox, create a text file in the infobox folder, then copy and paste the whole wiki code of your infobox, it must include several data_source|params|example usage, (they are the same):
+# title1|rp_name|age|dead_or_alive|titles|religion|jobs=|race=|money=|town|nation
+#FR Pour mettre votre propre infobox, créer un fichier text dans le dossier infoboxes, et y mettre tout le wiki code de la page de votre infobox, dedans il devra forcémenty avoir plusieurs data_source|params|example usage, (ce sont tous la même chose : title1|rp_name|age|dead_or_alive|titles|religion|jobs=|race=|money=|town|nation
 
 
 infoboxes:
     players: "default-players.txt"
     towns: "default-towns.txt"
     nations: "default-nations.txt"
+    
+infobox_composition:
+    players:
+        number_of_params: "11"
+        #Put the param number, put -1 for it to be disabled, params can go from 1-9 then 01 and 02
+        title1: "1"
+        rp_name: "2"
+        age: "3"
+        dead_or_alive: "4"
+        titles: "5"
+        religion: "6"
+        jobs: "7"
+        race: "8"
+        money: "9"
+        town: "01"
+        nation: "02"

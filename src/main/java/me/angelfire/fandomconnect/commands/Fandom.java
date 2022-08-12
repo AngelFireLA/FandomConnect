@@ -9,6 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -23,47 +24,61 @@ import me.angelfire.rpcard.utils.FileUtils;
 public class Fandom implements CommandExecutor, TabCompleter {
 
     FileConfiguration config = FandomConnect.INSTANCE.getConfig();
-    FileConfiguration languageConfig = FandomConnect.INSTANCE.getlanguageConfig();
 
     @Override
     public List < String > onTabComplete(final CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
-        if (args.length == 1) return Arrays.asList("toggle", "sync");
+        if (args.length == 1) return Arrays.asList("toggle", "sync", "reload");
         if (args[0].equalsIgnoreCase("toggle") && args.length == 2) return Arrays.asList("rpcard", "towny");
+        if (args[0].equalsIgnoreCase("reload") && args.length == 2) return Arrays.asList("config", "language");
         if (args[0].equalsIgnoreCase("sync") && args.length == 2) return Arrays.asList("all", "towns", "nations", "players");
-        if (args[1].equalsIgnoreCase("rpcard") && args.length == 3) return Arrays.asList("page_creation");
-        if (args[1].equalsIgnoreCase("towny") && args.length == 3) return Arrays.asList("towns", "nations");
-        if ((args[2].equalsIgnoreCase("towns") && args.length == 4) || (args[2].equalsIgnoreCase("nations") && args.length == 4)) return Arrays.asList("page_creation");
+        if (args[1].equalsIgnoreCase("rpcard") && args.length == 3) return Arrays.asList("page_creation", "infobox_creation");
+        if (args[1].equalsIgnoreCase("towny") && args.length == 3) return Arrays.asList("town", "nation");
+        if ((args[2].equalsIgnoreCase("town") && args.length == 4) || (args[2].equalsIgnoreCase("nation") && args.length == 4)) return Arrays.asList("page_creation", "infobox_creation");
         return null;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        FileConfiguration languageFile = FandomConnect.INSTANCE.getlanguageConfig();
         if (args[0].equals("toggle")) {
             if (args[1].equals("rpcard")) {
                 if (args.length == 2) {
                     if (config.getString("data_to_send.rpcard.integration_enabled").equals("true")) {
                         config.set("data_to_send.rpcard.integration_enabled", "false");
-                        sender.sendMessage(languageConfig.getString("rpcard.integration.disabled"));
+                        sender.sendMessage(languageFile.getString("rpcard.integration.disabled"));
                         FandomConnect.INSTANCE.saveConfig();
                     } else if (config.getString("data_to_send.rpcard.integration_enabled").equals("false")) {
                         config.set("data_to_send.rpcard.integration_enabled", "true");
                         FandomConnect.INSTANCE.saveConfig();
-                        sender.sendMessage(languageConfig.getString("rpcard.integration.enabled"));
+                        sender.sendMessage(languageFile.getString("rpcard.integration.enabled"));
                     } else {
-                        sender.sendMessage(languageConfig.getString("error.neither_true_or_false"));
+                        sender.sendMessage(languageFile.getString("errors.neither_true_or_false"));
                     }
                 } else if (args.length == 3) {
                     if (args[2].equals("page_creation")) {
                         if (config.getString("data_to_send.rpcard.create_page_to_list_players").equals("true")) {
                             config.set("data_to_send.rpcard.create_page_to_list_players", "false");
-                            sender.sendMessage(languageConfig.getString("rpcard.create_page_to_list_players.disabled"));
+                            sender.sendMessage(languageFile.getString("rpcard.create_page_to_list_players.disabled"));
                             FandomConnect.INSTANCE.saveConfig();
                         } else if (config.getString("data_to_send.rpcard.create_page_to_list_players").equals("false")) {
                             config.set("data_to_send.rpcard.create_page_to_list_players", "true");
                             FandomConnect.INSTANCE.saveConfig();
-                            sender.sendMessage(languageConfig.getString("rpcard.create_page_to_list_players.enabled"));
+                            sender.sendMessage(languageFile.getString("rpcard.create_page_to_list_players.enabled"));
                         } else {
-                            sender.sendMessage(languageConfig.getString("error.neither_true_or_false"));
+                            sender.sendMessage(languageFile.getString("errors.neither_true_or_false"));
+                        }
+                    }
+                    if (args[2].equals("infobox_creation")) {
+                        if (config.getString("data_to_send.rpcard.create_infobox_for_players").equals("true")) {
+                            config.set("data_to_send.rpcard.create_infobox_for_players", "false");
+                            sender.sendMessage(languageFile.getString("rpcard.create_an_infobox_for_players.disabled"));
+                            FandomConnect.INSTANCE.saveConfig();
+                        } else if (config.getString("data_to_send.rpcard.create_infobox_for_players").equals("false")) {
+                            config.set("data_to_send.rpcard.create_infobox_for_players", "true");
+                            FandomConnect.INSTANCE.saveConfig();
+                            sender.sendMessage(languageFile.getString("rpcard.create_infobox_for_players.enabled"));
+                        } else {
+                            sender.sendMessage(languageFile.getString("errors.neither_true_or_false"));
                         }
                     }
                 }
@@ -71,69 +86,130 @@ public class Fandom implements CommandExecutor, TabCompleter {
                 if (args.length == 2) {
                     if (config.getString("data_to_send.towny.integration_enabled").equals("true")) {
                         config.set("data_to_send.towny.integration_enabled", "false");
-                        sender.sendMessage(languageConfig.getString("towny.integration.disabled"));
+                        sender.sendMessage(languageFile.getString("towny.integration.disabled"));
                         FandomConnect.INSTANCE.saveConfig();
-                    } else if (config.getString("data_to_send.rpcard.integration_enabled").equals("false")) {
+                    } else if (config.getString("data_to_send.towny.integration_enabled").equals("false")) {
                         config.set("data_to_send.towny.integration_enabled", "true");
                         FandomConnect.INSTANCE.saveConfig();
-                        sender.sendMessage(languageConfig.getString("towny.integration.enabled"));
+                        sender.sendMessage(languageFile.getString("towny.integration.enabled"));
                     } else {
-                        sender.sendMessage(languageConfig.getString("error.neither_true_or_false"));
+                        sender.sendMessage(languageFile.getString("errors.neither_true_or_false"));
                     }
-                } else if (args.length == 3) {
+                } else if (args.length >= 3) {
                     if (args[2].equals("town")) {
-                        if (config.getString("data_to_send.town").equals("true")) {
-                            config.set("data_to_send.towny.town", "false");
-                            sender.sendMessage(languageConfig.getString("towny.town_data_sending.disabled"));
-                            FandomConnect.INSTANCE.saveConfig();
-                        } else if (config.getString("data_to_send.rpcard.town").equals("false")) {
-                            config.set("data_to_send.towny.town", "true");
-                            FandomConnect.INSTANCE.saveConfig();
-                            sender.sendMessage(languageConfig.getString("towny.town_data_sending.enabled"));
-                        } else {
-                            sender.sendMessage(languageConfig.getString("error.neither_true_or_false"));
-                        }
+                    	if(args.length == 3) {
+                    		if (config.getString("data_to_send.towns").equals("true")) {
+                    			config.set("data_to_send.towny.towns", "false");
+                    			sender.sendMessage(languageFile.getString("towny.town_data_sending.disabled"));
+                    			FandomConnect.INSTANCE.saveConfig();
+                    		} else if (config.getString("data_to_send.towny.towns").equals("false")) {
+                    			config.set("data_to_send.towny.towns", "true");
+                    			FandomConnect.INSTANCE.saveConfig();
+                    			sender.sendMessage(languageFile.getString("towny.town_data_sending.enabled"));
+                    		} else {
+                    			sender.sendMessage(languageFile.getString("errors.neither_true_or_false"));
+                    		}
+                    	}
+                    	else if (args.length == 4) {
+                    		if(args[3].equals("page_creation")) {
+                            	if (config.getString("data_to_send.towny.create_page_to_list_towns").equals("true")) {
+                                	config.set("data_to_send.towny.create_page_to_list_towns", "false");
+                                	sender.sendMessage(languageFile.getString("towny.create_page_to_list_towns.disabled"));
+                                	FandomConnect.INSTANCE.saveConfig();
+                            	} else if (config.getString("data_to_send.towny.create_page_to_list_towns").equals("false")) {
+                                	config.set("data_to_send.towny.create_page_to_list_towns", "true");
+                                	FandomConnect.INSTANCE.saveConfig();
+                                	sender.sendMessage(languageFile.getString("towny.create_page_to_list_towns.enabled"));
+                            	} else {
+                            		sender.sendMessage(languageFile.getString("errors.neither_true_or_false"));
+                            	}
+                    		}
+                    		if(args[3].equals("infobox_creation")) {
+                            	if (config.getString("data_to_send.towny.create_infobox_for_towns").equals("true")) {
+                                	config.set("data_to_send.towny.create_infobox_for_towns", "false");
+                                	sender.sendMessage(languageFile.getString("towny.create_infobox_for_towns.disabled"));
+                                	FandomConnect.INSTANCE.saveConfig();
+                            	} else if (config.getString("data_to_send.towny.create_infobox_for_towns").equals("false")) {
+                                	config.set("data_to_send.towny.create_infobox_for_towns", "true");
+                                	FandomConnect.INSTANCE.saveConfig();
+                                	sender.sendMessage(languageFile.getString("towny.create_infobox_for_towns.enabled"));
+                            	} else {
+                                	sender.sendMessage(languageFile.getString("errors.neither_true_or_false"));
+                            	}
+                    		}
+                    	}
                     } else if (args[2].equals("nation")) {
-                        if (config.getString("data_to_send.towny.nation").equals("true")) {
-                            config.set("data_to_send.towny.nation", "false");
-                            sender.sendMessage(languageConfig.getString("towny.nation_data_sending.disabled"));
-                            FandomConnect.INSTANCE.saveConfig();
-                        } else if (config.getString("data_to_send.rpcard.nation").equals("false")) {
-                            config.set("data_to_send.towny.nation", "true");
-                            FandomConnect.INSTANCE.saveConfig();
-                            sender.sendMessage(languageConfig.getString("towny.nation_data_sending.enabled"));
-                        } else {
-                            sender.sendMessage(languageConfig.getString("error.neither_true_or_false"));
-                        }
+                    	if(args.length == 3) {
+                    		if (config.getString("data_to_send.towny.nations").equals("true")) {
+                            	config.set("data_to_send.towny.nations", "false");
+                            	sender.sendMessage(languageFile.getString("towny.nation_data_sending.disabled"));
+                            	FandomConnect.INSTANCE.saveConfig();
+                        	} else if (config.getString("data_to_send.towny.nations").equals("false")) {
+                            	config.set("data_to_send.towny.nations", "true");
+                            	FandomConnect.INSTANCE.saveConfig();
+                            	sender.sendMessage(languageFile.getString("towny.nation_data_sending.enabled"));
+                        	} else {
+                            	sender.sendMessage(languageFile.getString("errors.neither_true_or_false"));
+                        	}
+                    	}
+                    	else if (args.length == 4) {
+                    		if(args[3].equals("page_creation")) {
+                            	if (config.getString("data_to_send.towny.create_page_to_list_nations").equals("true")) {
+                                	config.set("data_to_send.towny.create_page_to_list_nations", "false");
+                                	sender.sendMessage(languageFile.getString("towny.create_page_to_list_nations.disabled"));
+                                	FandomConnect.INSTANCE.saveConfig();
+                            	} else if (config.getString("data_to_send.towny.create_page_to_list_nations").equals("false")) {
+                                	config.set("data_to_send.towny.create_page_to_list_nations", "true");
+                                	FandomConnect.INSTANCE.saveConfig();
+                                	sender.sendMessage(languageFile.getString("towny.create_page_to_list_nations.enabled"));
+                            	} else {
+                                	sender.sendMessage(languageFile.getString("errors.neither_true_or_false"));
+                            	}
+                    		}
+                    		if(args[3].equals("infobox_creation")) {
+                            	if (config.getString("data_to_send.towny.create_infobox_for_nations").equals("true")) {
+                                	config.set("data_to_send.towny.create_infobox_for_nations", "false");
+                                	sender.sendMessage(languageFile.getString("towny.create_infobox_for_nations.disabled"));
+                                	FandomConnect.INSTANCE.saveConfig();
+                            	} else if (config.getString("data_to_send.towny.create_infobox_for_nations").equals("false")) {
+                                	config.set("data_to_send.towny.create_infobox_for_nations", "true");
+                                	FandomConnect.INSTANCE.saveConfig();
+                                	sender.sendMessage(languageFile.getString("towny.create_infobox_for_nations.enabled"));
+                            	} else {
+                                	sender.sendMessage(languageFile.getString("errors.neither_true_or_false"));
+                            	}
+                    		}
+                    	}
                     }
                 }
-                if (args[3].equals("page_creation") && args.length == 4) {
-
-                    if (args[2].equals("town")) {
-                        if (config.getString("data_to_send.towny.create_page_to_list_towns").equals("true")) {
-                            config.set("data_to_send.towny.create_page_to_list_towns", "false");
-                            sender.sendMessage(languageConfig.getString("towny.create_page_to_list_towns.disabled"));
-                            FandomConnect.INSTANCE.saveConfig();
-                        } else if (config.getString("data_to_send.towny.create_page_to_list_towns").equals("false")) {
-                            config.set("data_to_send.towny.create_page_to_list_towns", "true");
-                            FandomConnect.INSTANCE.saveConfig();
-                            sender.sendMessage(languageConfig.getString("towny.create_page_to_list_towns.enabled"));
-                        } else {
-                            sender.sendMessage(languageConfig.getString("error.neither_true_or_false"));
-                        }
-                    } else if (args[2].equals("nation")) {
-                        if (config.getString("data_to_send.towny.create_page_to_list_nations").equals("true")) {
-                            config.set("data_to_send.towny.create_page_to_list_nations", "false");
-                            sender.sendMessage(languageConfig.getString("towny.create_page_to_list_nations.disabled"));
-                            FandomConnect.INSTANCE.saveConfig();
-                        } else if (config.getString("data_to_send.towny.create_page_to_list_nations").equals("false")) {
-                            config.set("data_to_send.towny.create_page_to_list_nations", "true");
-                            FandomConnect.INSTANCE.saveConfig();
-                            sender.sendMessage(languageConfig.getString("towny.create_page_to_list_nations.enabled"));
-                        } else {
-                            sender.sendMessage(languageConfig.getString("error.neither_true_or_false"));
-                        }
-                    }
+                if (args.length == 4) {
+                	if(args[3].equals("page_creation")) {
+                		if (args[2].equals("town")) {
+                        	if (config.getString("data_to_send.towny.create_page_to_list_towns").equals("true")) {
+                            	config.set("data_to_send.towny.create_page_to_list_towns", "false");
+                            	sender.sendMessage(languageFile.getString("towny.create_page_to_list_towns.disabled"));
+                            	FandomConnect.INSTANCE.saveConfig();
+                        	} else if (config.getString("data_to_send.towny.create_page_to_list_towns").equals("false")) {
+                            	config.set("data_to_send.towny.create_page_to_list_towns", "true");
+                            	FandomConnect.INSTANCE.saveConfig();
+                            	sender.sendMessage(languageFile.getString("towny.create_page_to_list_towns.enabled"));
+                        	} else {
+                        		sender.sendMessage(languageFile.getString("errors.neither_true_or_false"));
+                        	}
+                    	} else if (args[2].equals("nation")) {
+                        	if (config.getString("data_to_send.towny.create_page_to_list_nations").equals("true")) {
+                            	config.set("data_to_send.towny.create_page_to_list_nations", "false");
+                            	sender.sendMessage(languageFile.getString("towny.create_page_to_list_nations.disabled"));
+                            	FandomConnect.INSTANCE.saveConfig();
+                        	} else if (config.getString("data_to_send.towny.create_page_to_list_nations").equals("false")) {
+                            	config.set("data_to_send.towny.create_page_to_list_nations", "true");
+                            	FandomConnect.INSTANCE.saveConfig();
+                            	sender.sendMessage(languageFile.getString("towny.create_page_to_list_nations.enabled"));
+                        	} else {
+                            	sender.sendMessage(languageFile.getString("errors.neither_true_or_false"));
+                        	}
+                    	}
+                	}
                 }
             }
         } else if (args[0].equals("sync")) {
@@ -146,61 +222,107 @@ public class Fandom implements CommandExecutor, TabCompleter {
 
             } else if (args[1].equals("players")) {
                 if (config.getString("data_to_send.rpcard.integration_enabled").equals("true")) {
-                    syncPlayers();
+                    syncPlayers(config);
                 }
             }
         }
+        else if (args[0].equals("reload")){
+            if (args[1].equals("config")) {
+                config = YamlConfiguration.loadConfiguration(new File(FandomConnect.INSTANCE.getDataFolder(), "config.yml"));
+                sender.sendMessage(languageFile.getString("reload.config"));
+            }
+		}
         return false;
     }
 
-    public static void syncPlayers() {
+    public static void syncPlayers(FileConfiguration config) {
+        FileConfiguration languageFile = FandomConnect.INSTANCE.getlanguageConfig();
         Wiki wiki = FandomConnect.INSTANCE.getWiki();
-        wiki.login(FandomConnect.INSTANCE.getConfig().getString("login.username"), FandomConnect.INSTANCE.getConfig().getString("login.password"));
+        wiki.login(config.getString("login.username"), config.getString("login.password"));
         File folder = new File(RpCard.INSTANCE.getDataFolder(), "/profiles");
         final ProfileSerializationManager profileSerializationManager = RpCard.INSTANCE.getProfileSerializationManager();
-        FileConfiguration languageFile = FandomConnect.INSTANCE.getlanguageConfig();
+
 
         for (File file: folder.listFiles()) {
             final String json = FileUtils.loadContent(file);
             final Profile profile = profileSerializationManager.deserialize(json);
             String modele_base_name;
-            if (FandomConnect.INSTANCE.getConfig().getString("language").equals("fr_FR")) {
+            if (config.getString("language").equals("fr_FR")) {
                 modele_base_name = languageFile.getString("list_management.title.infobox_players").replaceAll("Modèle:", "");
             } else {
                 modele_base_name = languageFile.getString("list_management.title.infobox_players").replaceAll("Template:", "");
             }
-            String infobox = "{{" + modele_base_name + languageFile.getString("infobox.players");
-            infobox = infobox.replaceAll("Exemple2", profile.getNomRp());
-            infobox = infobox.replaceAll("Exemple1", profile.getPlayername());
-            infobox = infobox.replaceAll("Exemple3", String.valueOf(profile.getAge()));
-            if (FandomConnect.INSTANCE.getConfig().getString("language").equals("fr_FR")) {
-                infobox = infobox.replaceAll("Exemple4", profile.getDeadoralive());
-            } else {
-                infobox = infobox.replaceAll("Exemple4", translator(profile.getDeadoralive()));
-            }
-            infobox = infobox.replaceAll("Exemple5", String.valueOf(profile.getTitre()));
-            infobox = infobox.replaceAll("Exemple6", profile.getReligion());
-            infobox = infobox.replaceAll("Exemple7", profile.getProfession());
-            infobox = infobox.replaceAll("Exemple8", profile.getRace());
 
-            if (TownyUniverse.getInstance().getResident(profile.getUuid()) != null) {
-                if (TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() != null) {
-                    infobox = infobox.replaceAll("Exemple01", TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName());
-                    infobox = infobox.replaceAll("Exemple02", TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull().getName());
-                } else if (TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull() != null && TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() == null) {
-                    infobox = infobox.replaceAll("Exemple01", TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName());
-                    infobox = infobox.replaceAll("Exemple02", "None");
+            String infobox = "{{" + modele_base_name + languageFile.getString("infobox.players");
+            if(config.getString("data_to_send.rpcard.integration_enabled").equals("true")) {
+            	if (paramEnabled("rp_name")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.rp_name"), profile.getNomRp());
+            	if (paramEnabled("title1")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.title1"), profile.getPlayername());
+            	if (paramEnabled("age")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.age"), String.valueOf(profile.getAge()));
+                if (config.getString("language").equals("fr_FR")) {
+                	if (paramEnabled("dead_or_alive")) {
+                		infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.dead_or_alive"), profile.getDeadoralive());
+                	}
+                } else {
+                	if (paramEnabled("dead_or_alive")) {
+                		infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.dead_or_alive"), translator(profile.getDeadoralive()));
+                	}
+                }
+            	if (paramEnabled("titles")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.titles"), profile.getTitre());
+            	if (paramEnabled("religion")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.religion"), profile.getReligion());
+            	if (paramEnabled("jobs")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.jobs"), profile.getProfession());
+            	if (paramEnabled("race")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.race"), profile.getRace());
+            }
+            else {
+            	if (paramEnabled("rp_name")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.rp_name"), languageFile.getString("infobox.empty_value"));
+            	if (paramEnabled("title1")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.title1"), languageFile.getString("infobox.empty_value"));
+            	if (paramEnabled("age")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.age"), languageFile.getString("infobox.empty_value"));
+                if (config.getString("language").equals("fr_FR")) {
+                	if (paramEnabled("dead_or_alive")) {
+                		infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.dead_or_alive"), "Inconnu");
+                	}
+                } else {
+                	if (paramEnabled("dead_or_alive")) {
+                		infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.dead_or_alive"), "Unkown");
+                	}
+                }
+            	if (paramEnabled("titles")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.titles"), languageFile.getString("infobox.empty_value"));
+            	if (paramEnabled("religion")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.religion"), languageFile.getString("infobox.empty_value"));
+            	if (paramEnabled("jobs")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.jobs"), languageFile.getString("infobox.empty_value"));
+            	if (paramEnabled("race")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.race"), languageFile.getString("infobox.empty_value"));
+			}
+            if(config.getString("data_to_send.towny.integration_enabled").equals("true")) {
+                if (TownyUniverse.getInstance().getResident(profile.getUuid()) != null) {
+                    if (TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() != null) {
+                    	if (paramEnabled("town")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.town"), TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName());
+                    	if (paramEnabled("nation")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.nation"), TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull().getName());
+                    }
+                    else if (TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull() != null && TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() == null) {
+                    	if (paramEnabled("town")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.town"), TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName());
+                    	if (paramEnabled("nation")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.nation"), languageFile.getString("infobox.empty_value"));
+                    	}
+                    else {
+                    	if (paramEnabled("town")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.town"), languageFile.getString("infobox.empty_value"));
+                    	if (paramEnabled("nation")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.nation"), languageFile.getString("infobox.empty_value"));
+                    }
+                    if (TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull() != null) {
+                    	if (paramEnabled("money")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.money"), String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance()));
+                    }
+                    else {
+                    	if (paramEnabled("money")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.money"), languageFile.getString("infobox.empty_value"));
+                    }
                 }
                 else {
-                    infobox = infobox.replaceAll("Exemple01", "None");
-                    infobox = infobox.replaceAll("Exemple02", "None");
-                }
-                if (TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull() != null) {
-                    infobox = infobox.replaceAll("Exemple9", String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance()));
-                } else {
-                    infobox = infobox.replaceAll("Exemple9", "???");
+                	if (paramEnabled("town")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.town"), languageFile.getString("infobox.empty_value"));
+                	if (paramEnabled("nation")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.nation"), languageFile.getString("infobox.empty_value"));
+                	if (paramEnabled("money")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.money"), languageFile.getString("infobox.empty_value"));
                 }
             }
+            else {
+            	if (paramEnabled("town")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.town"), languageFile.getString("infobox.empty_value"));
+            	if (paramEnabled("nation")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.nation"), languageFile.getString("infobox.empty_value"));
+            	if (paramEnabled("money")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.money"), languageFile.getString("infobox.empty_value"));
+
+			}
             if (!wiki.exists(profile.getPlayername())) {
                 wiki.addText(profile.getPlayername(), infobox, languageFile.getString("list_management.reason.added_something.players"), false);
             }
@@ -208,62 +330,66 @@ public class Fandom implements CommandExecutor, TabCompleter {
                 if (wiki.getTemplatesOnPage(profile.getPlayername()).contains(languageFile.getString("list_management.title.infobox_players"))) {
                 	int start;
                 	int end;
-
                     String pageText = wiki.getPageText(profile.getPlayername());
 
-                    start = pageText.indexOf("|rp_name=");
-                    end = pageText.indexOf("|age=");
-                    pageText = new StringBuffer(pageText).replace(start, end, "|rp_name=" + profile.getNomRp()).toString();
+                    if(config.getString("rpcard.integration_enabled").equals("true")) {
 
-                    start = pageText.indexOf("|age=");
-                    end = pageText.indexOf("|dead_or_alive=");
-                    pageText =new StringBuffer(pageText).replace(start, end, "|age= " + String.valueOf(profile.getAge())).toString();
+                        start = pageText.indexOf("|rp_name=");
+                        end = pageText.indexOf("|age=");
+                        pageText = new StringBuffer(pageText).replace(start, end, "|rp_name=" + profile.getNomRp()).toString();
 
-                    if (FandomConnect.INSTANCE.getConfig().getString("language").equals("fr_FR")) {
-                        pageText = pageText.replaceAll("dead_or_alive=Inconnu", "dead_or_alive=" + profile.getDeadoralive());
-                        pageText = pageText.replaceAll("dead_or_alive=Vivant", "dead_or_alive=" + profile.getDeadoralive());
-                        pageText = pageText.replaceAll("dead_or_alive=Mort", "dead_or_alive=" + profile.getDeadoralive());
-                    } else {
-                        pageText = pageText.replaceAll("dead_or_alive=Unkown", "dead_or_alive=" + translator(profile.getDeadoralive()));
-                        pageText = pageText.replaceAll("dead_or_alive=Alive", "dead_or_alive=" + translator(profile.getDeadoralive()));
-                        pageText = pageText.replaceAll("dead_or_alive=Dead", "dead_or_alive=" + translator(profile.getDeadoralive()));
+                        start = pageText.indexOf("|age=");
+                        end = pageText.indexOf("|dead_or_alive=");
+                        pageText =new StringBuffer(pageText).replace(start, end, "|age= " + String.valueOf(profile.getAge())).toString();
+
+                        if (config.getString("language").equals("fr_FR")) {
+                            pageText = pageText.replaceAll("dead_or_alive=Inconnu", "dead_or_alive=" + profile.getDeadoralive());
+                            pageText = pageText.replaceAll("dead_or_alive=Vivant", "dead_or_alive=" + profile.getDeadoralive());
+                            pageText = pageText.replaceAll("dead_or_alive=Mort", "dead_or_alive=" + profile.getDeadoralive());
+                        } else {
+                            pageText = pageText.replaceAll("dead_or_alive=Unkown", "dead_or_alive=" + translator(profile.getDeadoralive()));
+                            pageText = pageText.replaceAll("dead_or_alive=Alive", "dead_or_alive=" + translator(profile.getDeadoralive()));
+                            pageText = pageText.replaceAll("dead_or_alive=Dead", "dead_or_alive=" + translator(profile.getDeadoralive()));
+                        }
+
+                        start = pageText.indexOf("|titles=");
+                        end = pageText.indexOf("|religion=");
+                        pageText = new StringBuffer(pageText).replace(start, end, "|titles=" + profile.getTitre()).toString();
+
+                        start = pageText.indexOf("|religion=");
+                        end = pageText.indexOf("|jobs=");
+                        pageText =new StringBuffer(pageText).replace(start, end, "|religion=" + profile.getReligion()).toString();
+
+                        start = pageText.indexOf("|jobs=");
+                        end = pageText.indexOf("|race=");
+                        pageText =new StringBuffer(pageText).replace(start, end, "|jobs=" + profile.getProfession()).toString();
+
+                        start = pageText.indexOf("|race=");
+                        end = pageText.indexOf("|town=");
+                        pageText =new StringBuffer(pageText).replace(start, end, "|race=" + profile.getRace()).toString();
                     }
 
-                    start = pageText.indexOf("|titles=");
-                    end = pageText.indexOf("|religion=");
-                    pageText = new StringBuffer(pageText).replace(start, end, "|titles=" + profile.getTitre()).toString();
+                    if(config.getString("data_to_send.towny.integration_enabled").equals("true")) {
+                        if (TownyUniverse.getInstance().getResident(profile.getUuid()) != null) {
+                            if (TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() != null) {
+                                start = pageText.indexOf("|town=");
+                                end = pageText.indexOf("|nation=");
+                                pageText =new StringBuffer(pageText).replace(start, end, "|town=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName()).toString();
 
-                    start = pageText.indexOf("|religion=");
-                    end = pageText.indexOf("|jobs=");
-                    pageText =new StringBuffer(pageText).replace(start, end, "|religion=" + profile.getReligion()).toString();
+                                start = pageText.indexOf("|nation=");
+                                end = pageText.indexOf("}}");
+                                pageText = new StringBuffer(pageText).replace(start, end, "|nation=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull().getName()).toString();
 
-                    start = pageText.indexOf("|jobs=");
-                    end = pageText.indexOf("|race=");
-                    pageText =new StringBuffer(pageText).replace(start, end, "|jobs=" + profile.getProfession()).toString();
-
-                    start = pageText.indexOf("|race=");
-                    end = pageText.indexOf("|town=");
-                    pageText =new StringBuffer(pageText).replace(start, end, "|race=" + profile.getRace()).toString();
-
-                    if (TownyUniverse.getInstance().getResident(profile.getUuid()) != null) {
-                        if (TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() != null) {
-                            start = pageText.indexOf("|town=");
-                            end = pageText.indexOf("|nation=");
-                            pageText =new StringBuffer(pageText).replace(start, end, "|town=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName()).toString();
-
-                            start = pageText.indexOf("|nation=");
-                            end = pageText.indexOf("}}");
-                            pageText = new StringBuffer(pageText).replace(start, end, "|nation=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull().getName()).toString();
-
-                        } else if (TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull() != null && TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() == null) {
-                            start = pageText.indexOf("|town=");
-                            end = pageText.indexOf("|nation=");
-                            pageText = new StringBuffer(pageText).replace(start, end, "|town=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName()).toString();
-                        }
-                        if (TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull() != null) {
-                        	start = pageText.indexOf("|money=");
-                            end = pageText.indexOf("|town");
-                            pageText = new StringBuffer(pageText).replace(start, end, "|money=" + String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance())).toString();
+                            } else if (TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull() != null && TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() == null) {
+                                start = pageText.indexOf("|town=");
+                                end = pageText.indexOf("|nation=");
+                                pageText = new StringBuffer(pageText).replace(start, end, "|town=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName()).toString();
+                            }
+                            if (TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull() != null) {
+                            	start = pageText.indexOf("|money=");
+                                end = pageText.indexOf("|town");
+                                pageText = new StringBuffer(pageText).replace(start, end, "|money=" + String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance())).toString();
+                            }
                         }
                     }
                     wiki.edit(profile.getPlayername(), pageText, "");
@@ -272,7 +398,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
                     wiki.addText(profile.getPlayername(), infobox, languageFile.getString("list_management.reason.added_something.players"), false);
                 }
             }
-            if (!(wiki.getPageText(languageFile.getString("list_management.title.players")).contains(profile.getPlayername()))) {
+            if (!(wiki.getPageText(languageFile.getString("list_management.title.players")).contains(profile.getPlayername())) && config.getString("rpcard.create_page_to_list_players").equals("true")) {
                 wiki.addText(languageFile.getString("list_management.title.players"), "\r\n" +
                     "\r\n" +
                     "[[" + profile.getPlayername() + "]]", languageFile.getString("list_management.reason.added_something.players"), false);
@@ -293,6 +419,16 @@ public class Fandom implements CommandExecutor, TabCompleter {
     	else {
 			return null;
 		}
+    }
+
+    public static boolean paramEnabled(String param) {
+    	if (Integer.valueOf(FandomConnect.INSTANCE.getConfig().getString("infobox_composition.players." + param)) >= 1 || Integer.valueOf(FandomConnect.INSTANCE.getConfig().getString("infobox_composition.players." + param)) == 01 ) {
+			return true;
+		}
+    	else {
+    		return false;
+    	}
+
     }
 
 }

@@ -6,6 +6,10 @@ rpcard:
     create_page_to_list_players:
         enabled: "§a[FandomConnect] Creating a page to list players was enabled !"
         disabled: "§a[FandomConnect] Creating a page to list players was disabled !"
+        
+    create_page_infobox_for_players:
+        enabled: "§a[FandomConnect] Creating an infobox for players was enabled !"
+        disabled: "§a[FandomConnect] Creating an infobox for players was disabled !"
 
 towny:
     integration:
@@ -27,6 +31,15 @@ towny:
     create_page_to_list_nations:
         enabled: "§a[FandomConnect] Creating a page to list nations was enabled !"
         disabled: "§a[FandomConnect] Creating a page to list nations was disabled !"
+        
+    create_infobox_for_towns:
+        enabled: "§a[FandomConnect] Creating an infobox for towns was enabled !"
+        disabled: "§a[FandomConnect] Creating an infobox for towns was disabled !"
+
+    create_infobox_for_nations:
+        enabled: "§a[FandomConnect] Creating an infobox for nations was enabled !"
+        disabled: "§a[FandomConnect] Creating an infobox for nations was disabled !"
+        
         
 list_management:
     title:
@@ -52,4 +65,8 @@ errors:
 #Also, you musn't put space before or after |
 
 infobox:
-    players: "|title1=Exemple1|rp_name=Exemple2|age=Exemple3|dead_or_alive=Exemple4|titles=Exemple5|religion=Exemple6|jobs=Exemple7|race=Exemple8|money=Exemple9|town=Exemple01|nation=Exemple02}}"        
+    players: "|title1=Exemple1|rp_name=Exemple2|age=Exemple3|dead_or_alive=Exemple4|titles=Exemple5|religion=Exemple6|jobs=Exemple7|race=Exemple8|money=Exemple9|town=Exemple01|nation=Exemple02}}"
+    empty_value: "???"
+    
+reload:
+    config: "§a[FandomConnect] Reloaded config !"
