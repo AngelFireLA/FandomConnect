@@ -15,12 +15,11 @@ data_to_send:
         
     towny:
         integration_enabled: false
-        towns: true
+
         create_page_to_list_towns: false
         create_infobox_for_towns: false
         sync_at_restart: false
-        
-        nations: true
+
         create_page_to_list_nations: false
         create_infobox_for_nations: false
         sync_at_restart: false

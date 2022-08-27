@@ -233,7 +233,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 		wiki.login(config.getString("login.username"), config.getString("login.password"));
 		File folder = new File(RpCard.INSTANCE.getDataFolder(), "/profiles");
 		final ProfileSerializationManager profileSerializationManager = RpCard.INSTANCE.getProfileSerializationManager();
-		int number_of_params = Integer.parseInt(config.getString("number_of_params"));
+		int number_of_params = Integer.parseInt(config.getString("infobox_composition.players.number_of_params"));
 
 
 		for (File file: folder.listFiles()) {
@@ -478,24 +478,42 @@ public class Fandom implements CommandExecutor, TabCompleter {
 
 				if(config.getString("towny.integration_enabled").equals("true")) {
 					if (TownyUniverse.getInstance().getResident(profile.getUuid()) != null) {
-						if (TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() != null) {
-							start = pageText.indexOf("|town=");
-							end = pageText.indexOf("|nation=");
-							pageText =new StringBuffer(pageText).replace(start, end, "|town=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName()).toString();
+						if(pageText.indexOf("nationalite") == -1) {
+							if (TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() != null) {
+								start = pageText.indexOf("|town=");
+								end = pageText.indexOf("|nation=");
+								pageText =new StringBuffer(pageText).replace(start, end, "|town=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName()).toString();
 
-							start = pageText.indexOf("|nation=");
-							end = pageText.indexOf("}}");
-							pageText = new StringBuffer(pageText).replace(start, end, "|nation=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull().getName()).toString();
+								start = pageText.indexOf("|nation=");
+								end = pageText.indexOf("}}");
+								pageText = new StringBuffer(pageText).replace(start, end, "|nation=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull().getName()).toString();
 
-						} else if (TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull() != null && TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() == null) {
-							start = pageText.indexOf("|town=");
-							end = pageText.indexOf("|nation=");
-							pageText =new StringBuffer(pageText).replace(start, end, "|town=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName()).toString();
+							} else if (TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull() != null && TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() == null) {
+								start = pageText.indexOf("|town=");
+								end = pageText.indexOf("|nation=");
+								pageText =new StringBuffer(pageText).replace(start, end, "|town=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName()).toString();
+							}
+							if (TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull() != null) {
+								start = pageText.indexOf("|money=");
+								end = pageText.indexOf("|town=");
+								pageText = new StringBuffer(pageText).replace(start, end, "|money=" + String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance())).toString();
+							}
 						}
-						if (TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull() != null) {
-							start = pageText.indexOf("|money=");
-							end = pageText.indexOf("|town=");
-							pageText = new StringBuffer(pageText).replace(start, end, "|money=" + String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance())).toString();
+						else {
+							if (TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() != null) {
+								start = pageText.indexOf("|nationalite=");
+								end = pageText.indexOf("|parents=");
+								pageText =new StringBuffer(pageText).replace(start, end, "|nationalite=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName()).toString() + ", " + TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull().getName();
+							} else if (TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull() != null && TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() == null) {
+								start = pageText.indexOf("|nationalite=");
+								end = pageText.indexOf("|parents=");
+								pageText =new StringBuffer(pageText).replace(start, end, "|nationalite=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName()).toString();
+							}
+							if (TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull() != null) {
+								start = pageText.indexOf("|money=");
+								end = pageText.indexOf("|nationalite=");
+								pageText = new StringBuffer(pageText).replace(start, end, "|money=" + String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance())).toString();
+							}
 						}
 					}
 				}
