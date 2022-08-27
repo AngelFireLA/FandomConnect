@@ -39,7 +39,7 @@ infoboxes:
     
 infobox_composition:
     players:
-        number_of_params: "8"
+        number_of_params: "9"
         #Put the param number, put -1 for it to be disabled, params can go from 1-9 then 01 and 02
         title1: "1"
         rp_name: "2"

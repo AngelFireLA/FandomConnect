@@ -233,6 +233,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 		wiki.login(config.getString("login.username"), config.getString("login.password"));
 		File folder = new File(RpCard.INSTANCE.getDataFolder(), "/profiles");
 		final ProfileSerializationManager profileSerializationManager = RpCard.INSTANCE.getProfileSerializationManager();
+		int number_of_params = Integer.parseInt(config.getString("number_of_params"));
 
 
 		for (File file: folder.listFiles()) {
@@ -317,13 +318,38 @@ public class Fandom implements CommandExecutor, TabCompleter {
 				String pageText = wiki.getPageText(profile.getPlayername());
 
 				if(config.getString("rpcard.integration_enabled").equals("true")) {
-					start = pageText.indexOf("|" + getParam("1") + "=");
-					end = pageText.indexOf("|" + getParam("2") + "=");
-					pageText = new StringBuffer(pageText).replace(start, end, "|" + getParam("1") + "=" + getValueFromParam("1", profile)).toString();
+					if(isLessThanEnabled(2)) {
+						start = pageText.indexOf("|" + getParam("1") + "=");
+						end = pageText.indexOf("|" + getParam("2") + "=");
+						pageText = new StringBuffer(pageText).replace(start, end, "|" + getParam("1") + "=" + getValueFromParam("1", profile)).toString();
+					} else if(isLessThanEnabled(1)) {
+						if(config.getString("towny.integration_enabled").equals("true")) {
+							start = pageText.indexOf("|" + getParam("1") + "=");
+							end = pageText.indexOf("|money=");
+						}
+						else {
+							start = pageText.indexOf("|" + getParam("1") + "=");
+							end = pageText.indexOf("}}");
+						}
+						pageText = new StringBuffer(pageText).replace(start, end, "|" + getParam("1") + "=" + getValueFromParam("1", profile)).toString();
+					}
 
-					start = pageText.indexOf("|" + getParam("2") + "=");
-					end = pageText.indexOf("|" + getParam("3") + "=");
-					pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("2") + "= " + getValueFromParam("2", profile)).toString();
+					if(isLessThanEnabled(3)) {
+						start = pageText.indexOf("|" + getParam("2") + "=");
+						end = pageText.indexOf("|" + getParam("3") + "=");
+						pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("2") + "= " + getValueFromParam("2", profile)).toString();
+					} else if(isLessThanEnabled(2)) {
+						if(config.getString("towny.integration_enabled").equals("true")) {
+							start = pageText.indexOf("|" + getParam("2") + "=");
+							end = pageText.indexOf("|money=");
+						}
+						else {
+							start = pageText.indexOf("|" + getParam("2") + "=");
+							end = pageText.indexOf("}}");
+						}
+						pageText = new StringBuffer(pageText).replace(start, end, "|" + getParam("2") + "=" + getValueFromParam("2", profile)).toString();
+					}
+
 
 					if (config.getString("language").equals("fr_FR")) {
 						pageText = pageText.replaceAll("dead_or_alive=Inconnu", "dead_or_alive=" + profile.getDeadoralive());
@@ -335,37 +361,123 @@ public class Fandom implements CommandExecutor, TabCompleter {
 						pageText = pageText.replaceAll("dead_or_alive=Dead", "dead_or_alive=" + translator(profile.getDeadoralive()));
 					}
 
-					start = pageText.indexOf("|" + getParam("3") + "=");
-					end = pageText.indexOf("|" + getParam("4") + "=");
-					pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("3") + "= " + getValueFromParam("3", profile)).toString();
+					if(isLessThanEnabled(4)) {
+						start = pageText.indexOf("|" + getParam("3") + "=");
+						end = pageText.indexOf("|" + getParam("4") + "=");
+						pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("3") + "= " + getValueFromParam("3", profile)).toString();
+					} else  if(isLessThanEnabled(3)) {
+						if(config.getString("towny.integration_enabled").equals("true")) {
+							start = pageText.indexOf("|" + getParam("3") + "=");
+							end = pageText.indexOf("|money=");
+						}
+						else {
+							start = pageText.indexOf("|" + getParam("3") + "=");
+							end = pageText.indexOf("}}");
+						}
+						pageText = new StringBuffer(pageText).replace(start, end, "|" + getParam("3") + "=" + getValueFromParam("3", profile)).toString();
+					}
 
-					start = pageText.indexOf("|" + getParam("4") + "=");
-					end = pageText.indexOf("|" + getParam("5") + "=");
-					pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("4") + "= " + getValueFromParam("4", profile)).toString();
+					if(isLessThanEnabled(5)) {
+						start = pageText.indexOf("|" + getParam("4") + "=");
+						end = pageText.indexOf("|" + getParam("5") + "=");
+						pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("4") + "= " + getValueFromParam("4", profile)).toString();
+					} else  if(isLessThanEnabled(4)) {
+						if(config.getString("towny.integration_enabled").equals("true")) {
+							start = pageText.indexOf("|" + getParam("4") + "=");
+							end = pageText.indexOf("|money=");
+						}
+						else {
+							start = pageText.indexOf("|" + getParam("4") + "=");
+							end = pageText.indexOf("}}");
+						}
+						pageText = new StringBuffer(pageText).replace(start, end, "|" + getParam("4") + "=" + getValueFromParam("4", profile)).toString();
+					}
 
-					start = pageText.indexOf("|" + getParam("5") + "=");
-					end = pageText.indexOf("|" + getParam("6") + "=");
-					pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("5") + "= " + getValueFromParam("5", profile)).toString();
 
-					start = pageText.indexOf("|" + getParam("6") + "=");
-					end = pageText.indexOf("|" + getParam("7") + "=");
-					pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("6") + "= " + getValueFromParam("6", profile)).toString();
+					if(isLessThanEnabled(6)) {
+						start = pageText.indexOf("|" + getParam("5") + "=");
+						end = pageText.indexOf("|" + getParam("6") + "=");
+						pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("5") + "= " + getValueFromParam("5", profile)).toString();
+					} else if(isLessThanEnabled(5)) {
+						if(config.getString("towny.integration_enabled").equals("true")) {
+							start = pageText.indexOf("|" + getParam("5") + "=");
+							end = pageText.indexOf("|money=");
+						}
+						else {
+							start = pageText.indexOf("|" + getParam("5") + "=");
+							end = pageText.indexOf("}}");
+						}
+						pageText = new StringBuffer(pageText).replace(start, end, "|" + getParam("5") + "=" + getValueFromParam("5", profile)).toString();
+					}
 
-					start = pageText.indexOf("|" + getParam("7") + "=");
-					end = pageText.indexOf("|" + getParam("8") + "=");
-					pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("7") + "= " + getValueFromParam("7", profile)).toString();
+					if(isLessThanEnabled(7)) {
+						start = pageText.indexOf("|" + getParam("6") + "=");
+						end = pageText.indexOf("|" + getParam("7") + "=");
+						pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("6") + "= " + getValueFromParam("6", profile)).toString();
+					} else if(isLessThanEnabled(6)) {
+						if(config.getString("towny.integration_enabled").equals("true")) {
+							start = pageText.indexOf("|" + getParam("6") + "=");
+							end = pageText.indexOf("|money=");
+						}
+						else {
+							start = pageText.indexOf("|" + getParam("6") + "=");
+							end = pageText.indexOf("}}");
+						}
+						pageText = new StringBuffer(pageText).replace(start, end, "|" + getParam("6") + "=" + getValueFromParam("6", profile)).toString();
+					}
 
-					start = pageText.indexOf("|" + getParam("8") + "=");
-					end = pageText.indexOf("|" + getParam("9") + "=");
-					pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("8") + "= " + getValueFromParam("8", profile)).toString();
+
+					if(isLessThanEnabled(8)) {
+						start = pageText.indexOf("|" + getParam("7") + "=");
+						end = pageText.indexOf("|" + getParam("8") + "=");
+						pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("7") + "= " + getValueFromParam("7", profile)).toString();
+					} else if(isLessThanEnabled(7)) {
+						if(config.getString("towny.integration_enabled").equals("true")) {
+							start = pageText.indexOf("|" + getParam("7") + "=");
+							end = pageText.indexOf("|money=");
+						}
+						else {
+							start = pageText.indexOf("|" + getParam("7") + "=");
+							end = pageText.indexOf("}}");
+						}
+						pageText = new StringBuffer(pageText).replace(start, end, "|" + getParam("7") + "=" + getValueFromParam("7", profile)).toString();
+					}
+
+
+					if(isLessThanEnabled(9)) {
+						start = pageText.indexOf("|" + getParam("8") + "=");
+						end = pageText.indexOf("|" + getParam("9") + "=");
+						pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("8") + "= " + getValueFromParam("8", profile)).toString();
+					} else if(isLessThanEnabled(8)) {
+						if(config.getString("towny.integration_enabled").equals("true")) {
+							start = pageText.indexOf("|" + getParam("8") + "=");
+							end = pageText.indexOf("|money=");
+						}
+						else {
+							start = pageText.indexOf("|" + getParam("8") + "=");
+							end = pageText.indexOf("}}");
+						}
+						pageText = new StringBuffer(pageText).replace(start, end, "|" + getParam("8") + "=" + getValueFromParam("8", profile)).toString();
+					}
+
+
+					if(isLessThanEnabled(9)) {
+						if(config.getString("towny.integration_enabled").equals("true")) {
+							start = pageText.indexOf("|" + getParam("9") + "=");
+							end = pageText.indexOf("|money=");
+						}
+						else {
+							start = pageText.indexOf("|" + getParam("9") + "=");
+							end = pageText.indexOf("}}");
+						}
+						pageText = new StringBuffer(pageText).replace(start, end, "|" + getParam("8") + "=" + getValueFromParam("9", profile)).toString();
+					}
+
 
 				}
 
 				if(config.getString("towny.integration_enabled").equals("true")) {
 					if (TownyUniverse.getInstance().getResident(profile.getUuid()) != null) {
-						start = pageText.indexOf("|" + getParam("9") + "=");
-						end = pageText.indexOf("|money=");
-						pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("9") + "= " + getValueFromParam("9", profile)).toString();
 						if (TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() != null) {
 							start = pageText.indexOf("|town=");
 							end = pageText.indexOf("|nation=");
@@ -386,11 +498,6 @@ public class Fandom implements CommandExecutor, TabCompleter {
 							pageText = new StringBuffer(pageText).replace(start, end, "|money=" + String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance())).toString();
 						}
 					}
-				}
-				else {
-					start = pageText.indexOf("|" + getParam("9") + "=");
-					end = pageText.indexOf("}}");
-					pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("9") + "= " + getValueFromParam("9", profile)).toString();
 				}
 				wiki.edit(profile.getPlayername(), pageText, "");
 			}
@@ -473,4 +580,12 @@ public class Fandom implements CommandExecutor, TabCompleter {
 		}
 	}
 
+	public static Boolean isLessThanEnabled(Integer param_number) {
+		if (Integer.parseInt(FandomConnect.INSTANCE.getConfig().getString("infobox_composition.players.number_of_params")) >= param_number) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
