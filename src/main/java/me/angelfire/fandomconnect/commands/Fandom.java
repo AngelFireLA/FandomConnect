@@ -286,22 +286,22 @@ public class Fandom implements CommandExecutor, TabCompleter {
 			}
 			if (config.getString("towny.integration_enabled").equals("true") && (TownyUniverse.getInstance().getResident(profile.getUuid()) != null)) {
 				if (TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() != null) {
-					if (paramEnabled("town")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.town"), TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName());
-					if (paramEnabled("nation")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.nation"), TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull().getName());
+					infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.town"), TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName());
+					infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.nation"), TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull().getName());
 				} else {
 					if (TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull() != null && TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() == null) {
-						if (paramEnabled("town")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.town"), TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName());
+						infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.town"), TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName());
 					}
 					else {
-						if (paramEnabled("town")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.town"), languageFile.getString("infobox.empty_value"));
+						infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.town"), languageFile.getString("infobox.empty_value"));
 					}
-					if (paramEnabled("nation")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.nation"), languageFile.getString("infobox.empty_value"));
+					infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.nation"), languageFile.getString("infobox.empty_value"));
 				}
 				if (TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull() != null) {
-					if (paramEnabled("money")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.money"), String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance()));
+					infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.money"), String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance()));
 				}
 				else {
-					if (paramEnabled("money")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.money"), languageFile.getString("infobox.empty_value"));
+					infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.money"), languageFile.getString("infobox.empty_value"));
 				}
 			}
 			else {
