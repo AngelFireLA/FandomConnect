@@ -249,6 +249,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 			if(config.getString("rpcard.integration_enabled").equals("true")) {
 				if (paramEnabled("rp_name")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.rp_name"), profile.getNomRp());
 				if (paramEnabled("title1")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.title1"), profile.getPlayername());
+				if (paramEnabled("origines")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.origines"), profile.getOrigine());
 				if (paramEnabled("age")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.age"), String.valueOf(profile.getAge()));
 				if (config.getString("language").equals("fr_FR")) {
 					if (paramEnabled("dead_or_alive")) {
@@ -267,6 +268,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 			else {
 				if (paramEnabled("rp_name")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.rp_name"), languageFile.getString("infobox.empty_value"));
 				if (paramEnabled("title1")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.title1"), languageFile.getString("infobox.empty_value"));
+				if (paramEnabled("origines")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.title1"), languageFile.getString("infobox.empty_value"));
 				if (paramEnabled("age")) infobox = infobox.replaceAll("Exemple" + config.getString("infobox_composition.players.age"), languageFile.getString("infobox.empty_value"));
 				if (config.getString("language").equals("fr_FR")) {
 					if (paramEnabled("dead_or_alive")) {
@@ -354,13 +356,17 @@ public class Fandom implements CommandExecutor, TabCompleter {
 					end = pageText.indexOf("|" + getParam("8") + "=");
 					pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("7") + "= " + getValueFromParam("7", profile)).toString();
 
+					start = pageText.indexOf("|" + getParam("8") + "=");
+					end = pageText.indexOf("|" + getParam("9") + "=");
+					pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("8") + "= " + getValueFromParam("8", profile)).toString();
+
 				}
 
 				if(config.getString("towny.integration_enabled").equals("true")) {
 					if (TownyUniverse.getInstance().getResident(profile.getUuid()) != null) {
-						start = pageText.indexOf("|" + getParam("8") + "=");
+						start = pageText.indexOf("|" + getParam("9") + "=");
 						end = pageText.indexOf("|money=");
-						pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("8") + "= " + getValueFromParam("8", profile)).toString();
+						pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("9") + "= " + getValueFromParam("9", profile)).toString();
 						if (TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() != null) {
 							start = pageText.indexOf("|town=");
 							end = pageText.indexOf("|nation=");
@@ -383,9 +389,9 @@ public class Fandom implements CommandExecutor, TabCompleter {
 					}
 				}
 				else {
-					start = pageText.indexOf("|" + getParam("8") + "=");
+					start = pageText.indexOf("|" + getParam("9") + "=");
 					end = pageText.indexOf("}}");
-					pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("8") + "= " + getValueFromParam("8", profile)).toString();
+					pageText =new StringBuffer(pageText).replace(start, end, "|" + getParam("9") + "= " + getValueFromParam("9", profile)).toString();
 				}
 				wiki.edit(profile.getPlayername(), pageText, "");
 			}
@@ -436,6 +442,8 @@ public class Fandom implements CommandExecutor, TabCompleter {
 			return "jobs";
 		} else if(config.getString("infobox_composition.players.race").equals(param_id.toString())) {
 			return "race";
+		} else if(config.getString("infobox_composition.players.origines").equals(param_id.toString())) {
+			return "origines";
 		} else {
 			return "}}";
 		}
@@ -459,6 +467,8 @@ public class Fandom implements CommandExecutor, TabCompleter {
 			return profile.getProfession();
 		} else if(config.getString("infobox_composition.players.race").equals(param_id.toString())) {
 			return profile.getRace();
+		} else if(config.getString("infobox_composition.players.origines").equals(param_id.toString())) {
+			return profile.getOrigine();
 		} else {
 			return "}}";
 		}
