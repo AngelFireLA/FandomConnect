@@ -65,7 +65,7 @@ errors:
 #Also, you musn't put space before or after |
 
 infobox:
-    players: "|title1=Exemple1|rp_name=Exemple2|age=Exemple3|dead_or_alive=Exemple4|titles=Exemple5|religion=Exemple6|jobs=Exemple7|race=Exemple8|money=Exemple9|town=Exemple01|nation=Exemple02}}"
+    players: "|title1=Exemple1|rp_name=Exemple2|age=Exemple3|dead_or_alive=Exemple4|titles=Exemple5|religion=Exemple6|jobs=Exemple7|race=Exemple8|origines=Exemple9|money=Exemple03|town=Exemple01|nation=Exemple02}}"
     empty_value: "???"
     
 reload:

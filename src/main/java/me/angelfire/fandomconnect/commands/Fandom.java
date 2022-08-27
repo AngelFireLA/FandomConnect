@@ -317,7 +317,6 @@ public class Fandom implements CommandExecutor, TabCompleter {
 				String pageText = wiki.getPageText(profile.getPlayername());
 
 				if(config.getString("rpcard.integration_enabled").equals("true")) {
-
 					start = pageText.indexOf("|" + getParam("1") + "=");
 					end = pageText.indexOf("|" + getParam("2") + "=");
 					pageText = new StringBuffer(pageText).replace(start, end, "|" + getParam("1") + "=" + getValueFromParam("1", profile)).toString();
