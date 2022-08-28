@@ -318,7 +318,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 						end = pageText.indexOf("|money=");
 					} else {
 						start = pageText.indexOf("|" + getParam("1") + "=");
-						end = pageText.indexOf("}}");
+						end = pageText.indexOf("|parents=");
 					}
 					pageText = (new StringBuffer(pageText)).replace(start, end, "|" + getParam("1") + "=" + getValueFromParam("1", profile)).toString();
 				}
@@ -333,7 +333,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 						end = pageText.indexOf("|money=");
 					} else {
 						start = pageText.indexOf("|" + getParam("2") + "=");
-						end = pageText.indexOf("}}");
+						end = pageText.indexOf("|parents=");
 					}
 					pageText = (new StringBuffer(pageText)).replace(start, end, "|" + getParam("2") + "=" + getValueFromParam("2", profile)).toString();
 				}
@@ -351,7 +351,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 						end = pageText.indexOf("|money=");
 					} else {
 						start = pageText.indexOf("|" + getParam("3") + "=");
-						end = pageText.indexOf("}}");
+						end = pageText.indexOf("|parents=");
 					}
 					pageText = (new StringBuffer(pageText)).replace(start, end, "|" + getParam("3") + "=" + getValueFromParam("3", profile)).toString();
 				}
@@ -366,7 +366,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 						end = pageText.indexOf("|money=");
 					} else {
 						start = pageText.indexOf("|" + getParam("4") + "=");
-						end = pageText.indexOf("}}");
+						end = pageText.indexOf("|parents=");
 					}
 					pageText = (new StringBuffer(pageText)).replace(start, end, "|" + getParam("4") + "=" + getValueFromParam("4", profile)).toString();
 				}
@@ -381,7 +381,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 						end = pageText.indexOf("|money=");
 					} else {
 						start = pageText.indexOf("|" + getParam("5") + "=");
-						end = pageText.indexOf("}}");
+						end = pageText.indexOf("|parents=");
 					}
 					pageText = (new StringBuffer(pageText)).replace(start, end, "|" + getParam("5") + "=" + getValueFromParam("5", profile)).toString();
 				}
@@ -396,7 +396,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 						end = pageText.indexOf("|money=");
 					} else {
 						start = pageText.indexOf("|" + getParam("6") + "=");
-						end = pageText.indexOf("}}");
+						end = pageText.indexOf("|parents=");
 					}
 					pageText = (new StringBuffer(pageText)).replace(start, end, "|" + getParam("6") + "=" + getValueFromParam("6", profile)).toString();
 				}
@@ -411,7 +411,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 						end = pageText.indexOf("|money=");
 					} else {
 						start = pageText.indexOf("|" + getParam("7") + "=");
-						end = pageText.indexOf("}}");
+						end = pageText.indexOf("|parents=");
 					}
 					pageText = (new StringBuffer(pageText)).replace(start, end, "|" + getParam("7") + "=" + getValueFromParam("7", profile)).toString();
 				}
@@ -426,7 +426,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 						end = pageText.indexOf("|money=");
 					} else {
 						start = pageText.indexOf("|" + getParam("8") + "=");
-						end = pageText.indexOf("}}");
+						end = pageText.indexOf("|parents=");
 					}
 					pageText = (new StringBuffer(pageText)).replace(start, end, "|" + getParam("8") + "=" + getValueFromParam("8", profile)).toString();
 				}
@@ -437,7 +437,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 						end = pageText.indexOf("|money=");
 					} else {
 						start = pageText.indexOf("|" + getParam("9") + "=");
-						end = pageText.indexOf("}}");
+						end = pageText.indexOf("|parents=");
 					}
 					pageText = (new StringBuffer(pageText)).replace(start, end, "|" + getParam("8") + "=" + getValueFromParam("9", profile)).toString();
 				}
@@ -450,7 +450,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 						int end = pageText.indexOf("|nation=");
 						pageText = (new StringBuffer(pageText)).replace(start, end, "|town=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull().getName()).toString();
 						start = pageText.indexOf("|nation=");
-						end = pageText.indexOf("}}");
+						end = pageText.indexOf("|parents=");
 						pageText = (new StringBuffer(pageText)).replace(start, end, "|nation=" + TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull().getName()).toString();
 					} else if (TownyUniverse.getInstance().getResident(profile.getUuid()).getTownOrNull() != null && TownyUniverse.getInstance().getResident(profile.getUuid()).getNationOrNull() == null) {
 						int start = pageText.indexOf("|town=");
