@@ -300,9 +300,11 @@ public class Fandom implements CommandExecutor, TabCompleter {
 					infobox = infobox.replaceAll("??? baguette coins", String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance()));
 			}
 		}
-		if (!wiki.exists(profile.getPlayername()) || !wiki.getTemplatesOnPage(profile.getPlayername()).contains(languageFile.getString("list_management.title.infobox_players"))) {
+		if (!profile.getNomRp().equals("None") && (wiki.exists(profile.getNomRp()) || !wiki.getTemplatesOnPage(profile.getNomRp()).contains(languageFile.getString("list_management.title.infobox_players")))) {
 			wiki.addText(profile.getPlayername(), infobox, languageFile.getString("list_management.reason.added_something.players"), false);
-		} else {
+		} else if(!wiki.exists(profile.getPlayername()) || !wiki.getTemplatesOnPage(profile.getPlayername()).contains(languageFile.getString("list_management.title.infobox_players"))){
+			wiki.addText(profile.getNomRp(), infobox, languageFile.getString("list_management.reason.added_something.players"), false);
+		}else {
 			String pageText = wiki.getPageText(profile.getPlayername());
 			if (config.getString("rpcard.integration_enabled").equals("true")) {
 				if (isLessThanEnabled(Integer.valueOf(2)).booleanValue()) {

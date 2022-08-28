@@ -116,12 +116,7 @@ public final class FandomConnect extends JavaPlugin {
 
 	public Wiki getWiki() {
 		FileConfiguration config = INSTANCE.getConfig();
-		if (config.getString("language").equals("fr_FR")) {
-			wiki = new Wiki.Builder().withApiEndpoint(HttpUrl.parse(config.getString("links.fandom") + "/fr/api.php")).build();
-		}
-		else {
-			wiki = new Wiki.Builder().withApiEndpoint(HttpUrl.parse(config.getString("links.fandom") + "/api.php")).build();
-		}
+		wiki = new Wiki.Builder().withApiEndpoint(HttpUrl.parse(config.getString("links.fandom") + "/fr/api.php")).build();
 		return wiki;
 	}
 
@@ -154,12 +149,7 @@ public final class FandomConnect extends JavaPlugin {
 		wiki2.login(config.getString("login.username"), config.getString("login.password"));
 		FileConfiguration languageFile = INSTANCE.getlanguageConfig();
 		String modele_base_name;
-		if(config.getString("language").equals("fr_FR")) {
-			modele_base_name = languageFile.getString("list_management.title.infobox_players").replaceAll("Modèle:", "");
-		}
-		else {
-			modele_base_name = languageFile.getString("list_management.title.infobox_players").replaceAll("Template:", "");
-		}
+		modele_base_name = languageFile.getString("list_management.title.infobox_players").replaceAll("Template:", "");
 		if(config.getString("rpcard.create_infobox_for_players").equals("true")) {
 			if (!wiki2.exists(languageFile.getString("list_management.title.infobox_players"))) {
 				wiki2.addText(languageFile.getString("list_management.title.infobox_players"), FileUtils.loadContent(FandomConnect.INSTANCE.getInfobox(1)), languageFile.getString("list_management.reason.creation"), false);
