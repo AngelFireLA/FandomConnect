@@ -300,11 +300,12 @@ public class Fandom implements CommandExecutor, TabCompleter {
 					infobox = infobox.replaceAll("??? baguette coins", String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance()));
 			}
 		}
+		infobox = infobox + "\\r\\n [[Catégorie:Auto-Sync]]";
 		if (!profile.getNomRp().equals("None") && (wiki.exists(profile.getNomRp()) || !wiki.getTemplatesOnPage(profile.getNomRp()).contains(languageFile.getString("list_management.title.infobox_players")))) {
-			wiki.addText(profile.getPlayername(), infobox, languageFile.getString("list_management.reason.added_something.players"), false);
+			if(wiki.getPageText(profile.getPlayername()).contains("[[Catégorie:Auto-Sync]]")) wiki.addText(profile.getPlayername(), infobox, languageFile.getString("list_management.reason.added_something.players"), false);
 		} else if(!wiki.exists(profile.getPlayername()) || !wiki.getTemplatesOnPage(profile.getPlayername()).contains(languageFile.getString("list_management.title.infobox_players"))){
-			wiki.addText(profile.getNomRp(), infobox, languageFile.getString("list_management.reason.added_something.players"), false);
-		}else {
+			if(wiki.getPageText(profile.getPlayername()).contains("[[Catégorie:Auto-Sync]]")) wiki.addText(profile.getNomRp(), infobox, languageFile.getString("list_management.reason.added_something.players"), false);
+		}else if(wiki.getPageText(profile.getPlayername()).contains("[[Catégorie:Auto-Sync]]")){
 			String pageText = wiki.getPageText(profile.getPlayername());
 			if (config.getString("rpcard.integration_enabled").equals("true")) {
 				if (isLessThanEnabled(Integer.valueOf(2)).booleanValue()) {
@@ -478,6 +479,7 @@ public class Fandom implements CommandExecutor, TabCompleter {
 						pageText = (new StringBuffer(pageText)).replace(start, end, "|money=" + String.valueOf(TownyUniverse.getInstance().getResident(profile.getUuid()).getAccountOrNull().getHoldingBalance())).toString();
 					}
 				}
+			pageText = pageText + "\\r\\n [[Catégorie:Auto-Sync]]";
 			wiki.edit(profile.getPlayername(), pageText, "");
 		}
 		if (!wiki.getPageText(languageFile.getString("list_management.title.players")).contains(profile.getPlayername()) && config.getString("rpcard.create_page_to_list_players").equals("true"))
