@@ -4,7 +4,7 @@
  
 ## Concept
  FandomConnect is a plugin that will send information from your server, to your configured fandom.
- It Supports Player Profiles from RoleplayCard : https://github.com/LaBoulangerie/RolePlayCardPlugin
+ It Supports Player Profiles from RoleplayCard : https://github.com/AngelFireLA/RolePlayCardPlugin
  It supports Towny : Towns and Nations (and some more info on player profile), we will see how in configuration part.
 
 
